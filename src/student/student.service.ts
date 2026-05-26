@@ -1,0 +1,52 @@
+import { Injectable, NotFoundException } from '@nestjs/common';
+
+@Injectable()
+export class StudentService {
+
+    private students = [
+        { id: 1, name: 'John Doe', age: 20 },
+        { id: 2, name: 'Jane Smith', age: 22 },
+        { id: 3, name: 'Alice Johnson', age: 19 },
+    ];
+
+    getAllStudents() {
+        return this.students;
+    }
+    getStudentById(id: number) {
+        const student = this.students.find(student => student.id === id);
+        if(!student) throw new NotFoundException(`Student with id ${id} not found`);
+        return student;
+    } 
+
+    createStudent(name: string, age: number) {
+        const newStudent = {
+            id: this.students.length + 1,
+            name,
+            age,
+        };
+        this.students.push(newStudent);
+        return newStudent;
+    }
+
+    updateStudent(id: number, name: string, age: number) {
+        const student = this.students.find(student => student.id === id);
+        if(!student) throw new NotFoundException(`Student with id ${id} not found`);
+        student.name = name;
+        student.age = age;
+        return student;
+    }
+
+    deleteStudent(id: number) {
+        const studentIndex = this.students.findIndex(student => student.id === id);
+        if(studentIndex === -1) throw new NotFoundException(`Student with id ${id} not found`);
+        return this.students.splice(studentIndex, 1);
+    }
+
+    patchStudent(id: number, name?: string, age?: number) {
+        const student = this.students.find(student => student.id === id);
+        if(!student) throw new NotFoundException(`Student with id ${id} not found`);
+        if(name) student.name = name;
+        if(age) student.age = age;
+        return student;
+    }
+}
