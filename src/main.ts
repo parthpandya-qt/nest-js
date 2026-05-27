@@ -1,7 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common/pipes/validation.pipe';
+import dns from 'node:dns';
 
+dns.setServers(['1.1.1.1', '8.8.8.8']);
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({
@@ -12,5 +14,6 @@ async function bootstrap() {
  
 
   await app.listen(process.env.PORT ?? 3000);
+  app.enableShutdownHooks();
 }
 bootstrap();

@@ -1,9 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
+import { DatabaseService } from './database.service';
 
 @Controller('database')
 export class DatabaseController {
-    @Get()
-    getDatabaseInfo() {
-        return { name: 'MyDatabase', version: '1.0.0' };
+    constructor(private readonly databaseService: DatabaseService) {}
+
+    @Get('status')
+    getStatus() {
+        return this.databaseService.getData();
     }
 }
