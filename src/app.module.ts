@@ -7,7 +7,7 @@ import { ProductController } from './product/product.controller';
 import { EmployeeModule } from './employee/employee.module';
 import { CategoryModule } from './category/category.module';
 import { StudentModule } from './student/student.module';
-import { CustomerModule } from './customer/customer.module';
+import { CustomerModule } from './customer(validation and DTO))/customer.module';
 import { MynameController } from './myname/myname.controller';
 
 
